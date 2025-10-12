@@ -2,6 +2,7 @@ package states;
 
 import flixel.FlxObject;
 import flixel.effects.FlxFlicker;
+import flixel.util.FlxAxes;
 import flixel.addons.display.FlxBackdrop;
 import lime.app.Application;
 import states.editors.MasterEditorMenu;
@@ -69,12 +70,12 @@ var menuOptions:Array<String> = ["play", "extras", "options", "credits"];
     add(camFollow);
     FlxG.camera.follow(camFollow, 0.08);
     
-    sky = new FlxSprite().loadGraphic("menus/MenuDB/sky");
-    clouds = new FlxBackdrop().loadGraphic("menus/MenuDB/clouds_scrolling");
-    flatgrass = new FlxSprite().loadGraphic("menus/MenuDB/flattgrass");
-    groundOne = new FlxSprite().loadGraphic("menus/MenuDB/back_grounds_one");
-    hills = new FlxSprite().loadGraphic("menus/MenuDB/backgrounds_two");
-    groundTwo = new FlxSprite().loadGraphic("menus/MenuDB/ground");
+    sky:FlxSprite = new FlxSprite().loadGraphic("menus/MenuDB/sky");
+    clouds:FlxBackdrop = new FlxBackdrop().loadGraphic("menus/MenuDB/clouds_scrolling");
+    flatgrass:FlxSprite = new FlxSprite().loadGraphic("menus/MenuDB/flattgrass");
+    groundOne:FlxSprite = new FlxSprite().loadGraphic("menus/MenuDB/back_grounds_one");
+    hills:FlxSprite = new FlxSprite().loadGraphic("menus/MenuDB/backgrounds_two");
+    groundTwo:FlxSprite = new FlxSprite().loadGraphic("menus/MenuDB/ground");
 
     for (sprite in [sky, clouds, flatgrass, groundOne, hills, groundTwo]) {
         sprite.scale.set(0.8, 0.8);
