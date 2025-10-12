@@ -172,12 +172,8 @@ var menuOptions:Array<String> = ["play", "extras", "options", "credits"];
 	}
 
 	function createMenuItem(name:String, x:Float, y:Float):FlxSprite
-	{  
-		public var onClick:Void->Void;
-    public var selected:Bool = false;
-    public var name:String;
-
-		var menuItem:FlxSprite = new FlxSprite(x, y);
+	{ 
+    	var menuItem:FlxSprite = new FlxSprite(x, y);
 		menuItem.frames = Paths.image('menus/MenuDB/selection/$name');
 		menuItem.updateHitbox();
 		
