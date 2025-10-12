@@ -24,12 +24,7 @@ class MainMenuState extends MusicBeatState
 	var rightItem:FlxSprite;
 
 	//Centered/Text options
-	var optionShit:Array<String> = [
-		'story_mode',
-		'freeplay',
-		#if MODS_ALLOWED 'mods', #end
-		'credits'
-	];
+	var optionShit:Array<String> = ["play", "extras", "options", "credits"];
 
 	var leftOption:String = #if ACHIEVEMENTS_ALLOWED 'achievements' #else null #end;
 	var rightOption:String = 'options';
@@ -38,6 +33,22 @@ class MainMenuState extends MusicBeatState
 	var camFollow:FlxObject;
 
 	static var showOutdatedWarning:Bool = true;
+	
+	 var sky:FlxSprite;
+	var flatgrass:FlxSprite;
+	var groundOne:FlxSprite;
+	var hills:FlxSprite;
+	var groundTwo:FlxSprite;
+    var clouds:FlxBackdrop;
+var logo:FlxSprite;
+
+	var bgGroup:FlxSpriteGroup = new FlxSpriteGroup();
+var camFollow:FlxObject = new FlxObject();
+var itemGroup:FlxTypedGroup<FlxSprite> = new FlxTypedGroup();
+	
+final screenTensity:Float = 0.02;
+var menuOptions:Array<String> = ["play", "extras", "options", "credits"];
+
 	override function create()
 	{
 		super.create();
@@ -53,29 +64,63 @@ class MainMenuState extends MusicBeatState
 		#end
 
 		persistentUpdate = persistentDraw = true;
+    CoolUtil.playMenuSong(true);
+    FlxG.mouse.visible = true;
 
-		var yScroll:Float = 0.25;
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
-		bg.antialiasing = ClientPrefs.data.antialiasing;
-		bg.scrollFactor.set(0, yScroll);
-		bg.setGraphicSize(Std.int(bg.width * 1.175));
-		bg.updateHitbox();
-		bg.screenCenter();
-		add(bg);
+    add(camFollow);
+    FlxG.camera.follow(camFollow, 0, 0.08);
+    
+    sky = new FlxSprite().loadGraphic(getSprite("sky"));
+    clouds = new FlxBackdrop().loadGraphic(getSprite("clouds_scrolling"));
+    flatgrass = new FlxSprite().loadGraphic(getSprite("flattgrass"));
+    groundOne = new FlxSprite().loadGraphic(getSprite("back_grounds_one"));
+    hills = new FlxSprite().loadGraphic(getSprite("backgrounds_two"));
+    groundTwo = new FlxSprite().loadGraphic(getSprite("ground"));
 
-		camFollow = new FlxObject(0, 0, 1, 1);
-		add(camFollow);
+    for (sprite in [sky, clouds, flatgrass, groundOne, hills, groundTwo]) {
+        sprite.scale.set(0.8, 0.8);
+        sprite.updateHitbox();
+        bgGroup.add(sprite);
+    }
+    
+    sky.screenCenter(FlxAxes.X);
+    sky.y = -50;
+    sky.scrollFactor.set(0.2, 0.2);
 
-		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
-		magenta.antialiasing = ClientPrefs.data.antialiasing;
-		magenta.scrollFactor.set(0, yScroll);
-		magenta.setGraphicSize(Std.int(magenta.width * 1.175));
-		magenta.updateHitbox();
-		magenta.screenCenter();
-		magenta.visible = false;
-		magenta.color = 0xFFfd719b;
-		add(magenta);
+    clouds.screenCenter(FlxAxes.X);
+    clouds.y = -50;
+    clouds.velocity.x = -20;
+    clouds.scrollFactor.set(0.3, 0.3);
 
+    flatgrass.setPosition(100, (FlxG.height / 2) - 150);
+    flatgrass.scrollFactor.set(0.4, 0.4);
+
+    groundOne.screenCenter(FlxAxes.X);
+    groundOne.y = (FlxG.height / 2) + 50;
+    groundOne.scrollFactor.set(0.5, 0.5);
+
+    hills.setPosition(250, 0);
+    hills.scrollFactor.set(0.8, 0.8);
+
+    groundTwo.screenCenter(FlxAxes.X);
+    groundTwo.y = FlxG.height / 2;
+    groundTwo.scrollFactor.set(1.4, 1.4);
+    
+    for (thing in [sky, clouds, flatgrass, groundOne, hills, groundTwo])
+        thing.antialiasing = true;
+
+    add(bgGroup);
+
+    logo = new FlxSprite(20).loadGraphic(getSprite("logo"));
+    logo.scale.set(0.7, 0.7);
+    logo.updateHitbox();
+    logo.y = (FlxG.height / 2) - 200;
+    add(logo);
+    logo.antialiasing = true;
+    logo.scrollFactor.set(0, 0);
+
+    add(itemGroup);
+	
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
@@ -292,7 +337,10 @@ class MainMenuState extends MusicBeatState
 				FlxFlicker.flicker(item, 1, 0.06, false, false, function(flick:FlxFlicker)
 				{
 					switch (option)
-					{
+					{  
+						case "play":
+							PlayState.loadSong("inadequacy", "hard");
+							FlxG.switchState(new PlayState());
 						case 'story_mode':
 							MusicBeatState.switchState(new StoryMenuState());
 						case 'freeplay':
