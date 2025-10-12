@@ -71,12 +71,12 @@ var menuOptions:Array<String> = ["play", "extras", "options", "credits"];
     add(camFollow);
     FlxG.camera.follow(camFollow, 0, 0.08);
     
-    sky = new FlxSprite().loadGraphic(getSprite("sky"));
-    clouds = new FlxBackdrop().loadGraphic(getSprite("clouds_scrolling"));
-    flatgrass = new FlxSprite().loadGraphic(getSprite("flattgrass"));
-    groundOne = new FlxSprite().loadGraphic(getSprite("back_grounds_one"));
-    hills = new FlxSprite().loadGraphic(getSprite("backgrounds_two"));
-    groundTwo = new FlxSprite().loadGraphic(getSprite("ground"));
+    sky = new FlxSprite().loadGraphic("menus/MenuDB/sky");
+    clouds = new FlxBackdrop().loadGraphic("menus/MenuDB/clouds_scrolling");
+    flatgrass = new FlxSprite().loadGraphic("menus/MenuDB/flattgrass");
+    groundOne = new FlxSprite().loadGraphic("menus/MenuDB/back_grounds_one");
+    hills = new FlxSprite().loadGraphic("menus/MenuDB/backgrounds_two");
+    groundTwo = new FlxSprite().loadGraphic("menus/MenuDB/ground");
 
     for (sprite in [sky, clouds, flatgrass, groundOne, hills, groundTwo]) {
         sprite.scale.set(0.8, 0.8);
