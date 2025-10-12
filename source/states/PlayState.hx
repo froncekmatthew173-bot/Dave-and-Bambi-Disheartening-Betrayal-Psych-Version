@@ -563,7 +563,7 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.data.downScroll)
 			botplayTxt.y = healthBar.y + 70;
 		
-		songWatermark = new FlxText(4, healthBar.y + 50, 0, SONG.song, 16);
+		var songWatermark:FlxText = new FlxText(4, healthBar.y + 50, 0, SONG.song, 16);
 		songWatermark.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         songWatermark.borderSize = 1.25;
         uiGroup.add(songWatermark);
