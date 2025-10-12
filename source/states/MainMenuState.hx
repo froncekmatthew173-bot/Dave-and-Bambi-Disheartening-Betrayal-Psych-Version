@@ -44,7 +44,6 @@ class MainMenuState extends MusicBeatState
 var logo:FlxSprite;
 
 	var bgGroup:FlxSpriteGroup = new FlxSpriteGroup();
-var camFollow:FlxObject = new FlxObject();
 var itemGroup:FlxTypedGroup<FlxSprite> = new FlxTypedGroup();
 	
 final screenTensity:Float = 0.02;
@@ -65,11 +64,10 @@ var menuOptions:Array<String> = ["play", "extras", "options", "credits"];
 		#end
 
 		persistentUpdate = persistentDraw = true;
-    CoolUtil.playMenuSong(true);
     FlxG.mouse.visible = true;
 
     add(camFollow);
-    FlxG.camera.follow(camFollow, 0, 0.08);
+    FlxG.camera.follow(camFollow, 0.08);
     
     sky = new FlxSprite().loadGraphic("menus/MenuDB/sky");
     clouds = new FlxBackdrop().loadGraphic("menus/MenuDB/clouds_scrolling");
