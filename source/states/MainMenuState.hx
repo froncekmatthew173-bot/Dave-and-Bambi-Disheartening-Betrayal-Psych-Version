@@ -172,12 +172,13 @@ var menuOptions:Array<String> = ["play", "extras", "options", "credits"];
 	}
 
 	function createMenuItem(name:String, x:Float, y:Float):FlxSprite
-	{
+	{  
+		public var onClick:Void->Void;
+    public var selected:Bool = false;
+    public var name:String;
+
 		var menuItem:FlxSprite = new FlxSprite(x, y);
-		menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_$name');
-		menuItem.animation.addByPrefix('idle', '$name idle', 24, true);
-		menuItem.animation.addByPrefix('selected', '$name selected', 24, true);
-		menuItem.animation.play('idle');
+		menuItem.frames = Paths.image('menus/MenuDB/selection/$name');
 		menuItem.updateHitbox();
 		
 		menuItem.antialiasing = ClientPrefs.data.antialiasing;
