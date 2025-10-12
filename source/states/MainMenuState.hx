@@ -112,7 +112,7 @@ var menuOptions:Array<String> = ["play", "extras", "options", "credits"];
 
     add(bgGroup);
 
-    logo = new FlxSprite(20).loadGraphic(getSprite("logo"));
+    logo = new FlxSprite(20).loadGraphic("logo");
     logo.scale.set(0.7, 0.7);
     logo.updateHitbox();
     logo.y = (FlxG.height / 2) - 200;
@@ -175,7 +175,7 @@ var menuOptions:Array<String> = ["play", "extras", "options", "credits"];
 	function createMenuItem(name:String, x:Float, y:Float):FlxSprite
 	{ 
     	var menuItem:FlxSprite = new FlxSprite(x, y);
-		menuItem.frames = Paths.image('menus/MenuDB/selection/$name');
+        menuItem.loadGraphic('menus/MenuDB/selection/$name');
 		menuItem.updateHitbox();
 		
 		menuItem.antialiasing = ClientPrefs.data.antialiasing;
