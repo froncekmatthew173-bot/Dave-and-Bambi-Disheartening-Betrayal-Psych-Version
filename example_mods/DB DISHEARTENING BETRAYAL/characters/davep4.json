@@ -1,0 +1,78 @@
+{
+	"healthbar_colors": [
+		0,
+		0,
+		125
+	],
+	"position": [
+		-10,
+		0
+	],
+	"no_antialiasing": true,
+	"scale": 1.4,
+	"camera_position": [
+		-100,
+		0
+	],
+	"image": "characters/davep4",
+	"sing_duration": 4,
+	"healthicon": "davep4",
+	"flip_x": true,
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "IDLE"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-4.2,
+				0
+			],
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "up"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-2.8,
+				-2.8
+			],
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "left"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-4.2,
+				-1.4
+			],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "right"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-1.4,
+				-4.2
+			],
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "down"
+		}
+	]
+}
