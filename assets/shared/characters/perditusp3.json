@@ -1,0 +1,146 @@
+{
+	"healthbar_colors": [
+		105,
+		0,
+		7
+	],
+	"position": [
+		-400,
+		-100
+	],
+	"no_antialiasing": false,
+	"scale": 0.8,
+	"camera_position": [
+		100,
+		0
+	],
+	"image": "characters/perditusp3",
+	"sing_duration": 6.1,
+	"healthicon": "perditusp3",
+	"flip_x": false,
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "idle",
+			"indices": [],
+			"name": "p3perditus idle0"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singUP",
+			"indices": [],
+			"name": "p3perditus up0"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singUP-alt",
+			"indices": [],
+			"name": "p3perditus upALT"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "p3perditus left0"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singLEFT-alt",
+			"indices": [],
+			"name": "p3perditus leftALT"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "p3perditus down0"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singDOWN-alt",
+			"indices": [],
+			"name": "p3perditus downALT"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "p3perditus right0"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singRIGHT-alt",
+			"indices": [],
+			"name": "p3perditus rightALT"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "break",
+			"indices": [],
+			"name": "p3perditus micbreak"
+		},
+		{
+			"loop": true,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "idle-alt",
+			"indices": [
+				11
+			],
+			"name": "p3perditus micbreak"
+		}
+	]
+}
