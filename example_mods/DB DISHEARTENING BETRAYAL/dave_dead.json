@@ -1,0 +1,1004 @@
+{
+	"healthbar_colors": [
+		255,
+		255,
+		255
+	],
+	"position": [
+		200,
+		100
+	],
+	"no_antialiasing": false,
+	"scale": 1,
+	"camera_position": [
+		0,
+		0
+	],
+	"image": "characters/dave_dead",
+	"sing_duration": 4,
+	"healthicon": "dave_dead",
+	"flip_x": false,
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"anim": "firstDeath",
+			"indices": [],
+			"name": "dave dead hit"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				26,
+				0
+			],
+			"fps": 24,
+			"anim": "deathLoop",
+			"indices": [],
+			"name": "dave dead loop"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				26,
+				0
+			],
+			"fps": 24,
+			"anim": "deathConfirm",
+			"indices": [],
+			"name": "dave dead retry confirm"
+		}
+	]
+}
+{
+	"healthbar_colors": [
+		14,
+		95,
+		255
+	],
+	"position": [
+		100,
+		200
+	],
+	"no_antialiasing": false,
+	"scale": 1.1,
+	"camera_position": [
+		-200,
+		0
+	],
+	"image": "characters/davep1",
+	"sing_duration": 6.1,
+	"healthicon": "davep1",
+	"flip_x": true,
+	"animations": [
+		{
+			"loop": true,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "idle0"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "down"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-11,
+				22
+			],
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "up"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-121,
+				-4.4
+			],
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "left"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-74.8,
+				0
+			],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "right"
+		}
+	]
+}
+{
+	"healthbar_colors": [
+		14,
+		95,
+		255
+	],
+	"position": [
+		100,
+		200
+	],
+	"no_antialiasing": false,
+	"scale": 1,
+	"camera_position": [
+		-100,
+		0
+	],
+	"image": "characters/davep2",
+	"sing_duration": 6.1,
+	"healthicon": "davep2",
+	"flip_x": true,
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "idle"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-43,
+				4
+			],
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "left"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-15,
+				-20
+			],
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "down"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				35
+			],
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "up"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-115,
+				11
+			],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "right"
+		}
+	]
+}
+{
+	"healthbar_colors": [
+		167,
+		203,
+		236
+	],
+	"position": [
+		-300,
+		100
+	],
+	"no_antialiasing": false,
+	"scale": 0.9,
+	"camera_position": [
+		-100,
+		0
+	],
+	"image": "characters/davep3",
+	"sing_duration": 6.1,
+	"healthicon": "davep3",
+	"flip_x": true,
+	"animations": [
+		{
+			"loop": true,
+			"offsets": [
+				0,
+				0.999
+			],
+			"fps": 12,
+			"anim": "idle",
+			"indices": [],
+			"name": "Idle"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singUP",
+			"indices": [],
+			"name": "Up"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "Down"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "Left"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "Right"
+		}
+	]
+}
+{
+	"healthbar_colors": [
+		0,
+		0,
+		125
+	],
+	"position": [
+		-10,
+		0
+	],
+	"no_antialiasing": true,
+	"scale": 1.4,
+	"camera_position": [
+		-100,
+		0
+	],
+	"image": "characters/davep4",
+	"sing_duration": 4,
+	"healthicon": "davep4",
+	"flip_x": true,
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "IDLE"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-4.2,
+				0
+			],
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "up"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-2.8,
+				-2.8
+			],
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "left"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-4.2,
+				-1.4
+			],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "right"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-1.4,
+				-4.2
+			],
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "down"
+		}
+	]
+}
+{
+	"healthbar_colors": [
+		83,
+		170,
+		255
+	],
+	"position": [
+		200,
+		200
+	],
+	"no_antialiasing": true,
+	"scale": 2,
+	"camera_position": [
+		-100,
+		0
+	],
+	"image": "characters/davep5",
+	"sing_duration": 12,
+	"healthicon": "davep5",
+	"flip_x": true,
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "idle",
+			"indices": [],
+			"name": "idle"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-58,
+				32
+			],
+			"fps": 12,
+			"anim": "singUP",
+			"indices": [],
+			"name": "up"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-196,
+				28
+			],
+			"fps": 12,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "left"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-112,
+				4
+			],
+			"fps": 12,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "right"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "down"
+		}
+	]
+}
+{
+	"healthbar_colors": [
+		49,
+		62,
+		128
+	],
+	"position": [
+		80,
+		350
+	],
+	"no_antialiasing": false,
+	"scale": 1,
+	"camera_position": [
+		0,
+		0
+	],
+	"image": "characters/perditusp1",
+	"sing_duration": 16,
+	"healthicon": "perditusp1",
+	"flip_x": false,
+	"animations": [
+		{
+			"loop": true,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "idle"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				33,
+				39
+			],
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "up"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				70,
+				4
+			],
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "left"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				4,
+				-1
+			],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "right"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				18,
+				2
+			],
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "down"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				63,
+				13
+			],
+			"fps": 24,
+			"anim": "breakmyphone",
+			"indices": [],
+			"name": "animm"
+		}
+	]
+}
+{
+	"healthbar_colors": [
+		49,
+		62,
+		128
+	],
+	"position": [
+		-150,
+		180
+	],
+	"no_antialiasing": false,
+	"scale": 0.8,
+	"camera_position": [
+		100,
+		0
+	],
+	"image": "characters/perditusp1point5",
+	"sing_duration": 6.1,
+	"healthicon": "perditusp1point5",
+	"flip_x": false,
+	"animations": [
+		{
+			"loop": true,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "idle",
+			"indices": [],
+			"name": "IDLE"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-1.6,
+				-0.8
+			],
+			"fps": 12,
+			"anim": "singUP",
+			"indices": [],
+			"name": "UP"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-16,
+				3.2
+			],
+			"fps": 12,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "LEFT"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "RIGHT"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "DOWN"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "fuck",
+			"indices": [],
+			"name": "FUCK"
+		}
+	]
+}
+{
+	"healthbar_colors": [
+		56,
+		42,
+		114
+	],
+	"position": [
+		-400,
+		-330
+	],
+	"no_antialiasing": true,
+	"scale": 1.4,
+	"camera_position": [
+		0,
+		0
+	],
+	"image": "characters/perditusp2",
+	"sing_duration": 6.1,
+	"healthicon": "perditusp2",
+	"flip_x": false,
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "idle",
+			"indices": [],
+			"name": "perditusp2new idle"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singUP",
+			"indices": [],
+			"name": "perditusp2new up"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-219.8,
+				14
+			],
+			"fps": 12,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "perditusp2new left"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "perditusp2new right"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "perditusp2new down"
+		}
+	]
+}
+{
+	"healthbar_colors": [
+		105,
+		0,
+		7
+	],
+	"position": [
+		-400,
+		-100
+	],
+	"no_antialiasing": false,
+	"scale": 0.8,
+	"camera_position": [
+		100,
+		0
+	],
+	"image": "characters/perditusp3",
+	"sing_duration": 6.1,
+	"healthicon": "perditusp3",
+	"flip_x": false,
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "idle",
+			"indices": [],
+			"name": "p3perditus idle0"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singUP",
+			"indices": [],
+			"name": "p3perditus up0"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singUP-alt",
+			"indices": [],
+			"name": "p3perditus upALT"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "p3perditus left0"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singLEFT-alt",
+			"indices": [],
+			"name": "p3perditus leftALT"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "p3perditus down0"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singDOWN-alt",
+			"indices": [],
+			"name": "p3perditus downALT"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "p3perditus right0"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singRIGHT-alt",
+			"indices": [],
+			"name": "p3perditus rightALT"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "break",
+			"indices": [],
+			"name": "p3perditus micbreak"
+		},
+		{
+			"loop": true,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "idle-alt",
+			"indices": [
+				11
+			],
+			"name": "p3perditus micbreak"
+		}
+	]
+}
+{
+	"healthbar_colors": [
+		77,
+		14,
+		155
+	],
+	"position": [
+		-450,
+		-100
+	],
+	"no_antialiasing": true,
+	"scale": 1.4,
+	"camera_position": [
+		200,
+		0
+	],
+	"image": "characters/perditusp4",
+	"sing_duration": 6.1,
+	"healthicon": "perditusp4",
+	"flip_x": false,
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "idle"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				168,
+				0
+			],
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "left"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "down"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "up"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "right"
+		}
+	]
+}
+{
+	"healthbar_colors": [
+		111,
+		0,
+		56
+	],
+	"position": [
+		200,
+		500
+	],
+	"no_antialiasing": true,
+	"scale": 2.4,
+	"camera_position": [
+		0,
+		0
+	],
+	"image": "characters/perditusp5",
+	"sing_duration": 16,
+	"healthicon": "perditusp5",
+	"flip_x": false,
+	"animations": [
+		{
+			"loop": true,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "idle",
+			"indices": [],
+			"name": "idle"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				43.2,
+				57.6
+			],
+			"fps": 12,
+			"anim": "singUP",
+			"indices": [],
+			"name": "up"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				175.2,
+				0
+			],
+			"fps": 12,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "left"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "right"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				100.8,
+				0
+			],
+			"fps": 12,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "down"
+		}
+	]
+}
