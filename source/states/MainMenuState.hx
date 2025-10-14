@@ -40,8 +40,8 @@ class MainMenuState extends MusicBeatState
 	var leftItem:FlxSprite;
 	var rightItem:FlxSprite;
 
-	var optionShit:Array<String> = [];
-	var leftOption:Array<String> = ["play", "extras", "options", "credits"];
+	var optionShit:Array<String> = [["play", "extras", "options", "credits"]];
+	var leftOption:String = "";
 	var rightOption:String = "";
 
 	var camFollow:FlxObject;
