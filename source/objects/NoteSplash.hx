@@ -446,6 +446,10 @@ class PixelSplashShaderRef
 				shader.g.value[i] = tempShader.shader.g.value[i];
 				shader.b.value[i] = tempShader.shader.b.value[i];
 			}
+			// Splashes are recycled. Re-enable the shader whenever a real
+			// palette is supplied, otherwise a previously-disabled splash
+			// would keep rendering uncolored forever.
+			enabled = true;
 			shader.mult.value[0] = tempShader.shader.mult.value[0];
 		}
 		else enabled = false;

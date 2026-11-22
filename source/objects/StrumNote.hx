@@ -25,19 +25,27 @@ class StrumNote extends FlxSprite
 		return value;
 	}
 
-	public var useRGBShader:Bool = true;
+	public var useRGBShader(default, set):Bool = true;
+	private function set_useRGBShader(value:Bool):Bool
+	{
+		useRGBShader = value;
+		// Only force-disable here; playAnim() decides when to show the color.
+		if (!value && rgbShader != null) rgbShader.enabled = false;
+		return value;
+	}
+
 	public function new(x:Float, y:Float, leData:Int, player:Int) {
+		super(x, y);
+
 		animation = new PsychAnimationController(this);
+
+		noteData = leData;
+		this.player = player;
+		this.ID = noteData;
 
 		rgbShader = new RGBShaderReference(this, Note.initializeGlobalRGBShader(leData));
 		rgbShader.enabled = false;
 		if(PlayState.SONG != null && PlayState.SONG.disableNoteRGB) useRGBShader = false;
-
-		noteData = leData;
-		this.player = player;
-		this.noteData = leData;
-		this.ID = noteData;
-		super(x, y);
 
 		var skin:String = null;
 		if(PlayState.SONG != null && PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
@@ -198,10 +206,30 @@ class StrumNote extends FlxSprite
 		rgbShader.enabled = false;
 	}
 
+	var appliedR:Null<FlxColor> = null;
+	var appliedG:Null<FlxColor> = null;
+	var appliedB:Null<FlxColor> = null;
+	public var customRGBLocked:Bool = false;
+
+	function rememberAppliedColors()
+	{
+		appliedR = rgbShader.r;
+		appliedG = rgbShader.g;
+		appliedB = rgbShader.b;
+	}
+
 	// Applies the active note-color mode to this receptor, the same way notes
 	// are colored in FNF JS Engine (JordanSantiagoYT).
 	public function updateRGBColors() {
 		if (rgbShader == null || !useRGBShader) return;
+
+		if (!customRGBLocked && appliedR != null && (rgbShader.r != appliedR || rgbShader.g != appliedG || rgbShader.b != appliedB))
+			customRGBLocked = true; // script-tinted receptor - keep its colors
+
+		if (customRGBLocked) {
+			rememberAppliedColors();
+			return;
+		}
 
 		var palette:RGBPalette = null;
 		if (modeColorsActive())
@@ -219,6 +247,7 @@ class StrumNote extends FlxSprite
 					palette = RGBPalettePool.getRainbow((Conductor.songPosition / rainbowTime * 360) % 360);
 				case 'Quant-Based':
 					backend.CoolUtil.checkNoteQuant(null, Conductor.songPosition, rgbShader);
+					rememberAppliedColors();
 					return;
 				default:
 			}
@@ -226,5 +255,6 @@ class StrumNote extends FlxSprite
 
 		if (palette == null) palette = Note.initializeGlobalRGBShader(noteData);
 		rgbShader.assign(palette);
+		rememberAppliedColors();
 	}
 }

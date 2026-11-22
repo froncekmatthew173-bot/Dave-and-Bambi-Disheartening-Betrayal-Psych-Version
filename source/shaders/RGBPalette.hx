@@ -21,8 +21,15 @@ class RGBPalette {
 				shader.b.value[i] = tempShader.shader.b.value[i];
 			}
 			shader.mult.value[0] = tempShader.shader.mult.value[0];
+			mult = tempShader.mult;
+			r = tempShader.r;
+			g = tempShader.g;
+			b = tempShader.b;
 		}
-		else shader.mult.value[0] = 0.0;
+		else {
+			shader.mult.value[0] = 0.0;
+			mult = 0;
+		}
 	}
 
 	private function set_r(color:FlxColor) {

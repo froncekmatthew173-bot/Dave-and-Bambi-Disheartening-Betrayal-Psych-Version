@@ -246,7 +246,6 @@ class Note extends FlxSprite
 		texture = ''; // reloadNote() resolves the song/default skin from here
 		useRGBShader = ClientPrefs.data.enableColorShader && (PlayState.SONG == null || !PlayState.SONG.disableNoteRGB);
 		rgbShader.enabled = useRGBShader;
-		updateRGBColors();
 	}
 
 	function charColors():Null<Array<Int>>
@@ -264,12 +263,54 @@ class Note extends FlxSprite
 	var appliedR:Null<FlxColor> = null;
 	var appliedG:Null<FlxColor> = null;
 	var appliedB:Null<FlxColor> = null;
+	// Once a script (or a custom note type) has set its own shader colors, the
+	// engine stops recoloring this note so those colors are never lost.
+	public var customRGBLocked:Bool = false;
 
 	function rememberAppliedColors()
 	{
 		appliedR = rgbShader.r;
 		appliedG = rgbShader.g;
 		appliedB = rgbShader.b;
+	}
+
+	// Same idea for splash colors: -1 means "use the note's shader palette".
+	// Values a script set explicitly are kept across recolors.
+	var appliedSplashR:FlxColor = -1;
+	var appliedSplashG:FlxColor = -1;
+	var appliedSplashB:FlxColor = -1;
+	public var customSplashLocked:Bool = false;
+
+	function resetSplashColors(force:Bool = false)
+	{
+		if (!force && !customSplashLocked &&
+			(noteSplashData.r != appliedSplashR || noteSplashData.g != appliedSplashG || noteSplashData.b != appliedSplashB))
+			customSplashLocked = true; // a script set splash-only colors
+
+		if (customSplashLocked)
+		{
+			appliedSplashR = noteSplashData.r;
+			appliedSplashG = noteSplashData.g;
+			appliedSplashB = noteSplashData.b;
+			return;
+		}
+		noteSplashData.r = -1;
+		noteSplashData.g = -1;
+		noteSplashData.b = -1;
+		appliedSplashR = -1;
+		appliedSplashG = -1;
+		appliedSplashB = -1;
+	}
+
+	function setHurtSplashColors()
+	{
+		noteSplashData.r = 0xFFFF0000;
+		noteSplashData.g = 0xFF101010;
+		noteSplashData.b = -1;
+		noteSplashData.texture = 'noteSplashes/noteSplashes-electric';
+		appliedSplashR = noteSplashData.r;
+		appliedSplashG = noteSplashData.g;
+		appliedSplashB = noteSplashData.b;
 	}
 
 	/**
@@ -282,13 +323,15 @@ class Note extends FlxSprite
 	 */
 	public function updateRGBColors(?r:FlxColor, ?g:FlxColor, ?b:FlxColor)
 	{
-		if (!useRGBShader) return;
+		if (!useRGBShader || !ClientPrefs.data.enableColorShader) return;
 		if (rgbShader == null) rgbShader = new RGBShaderReference(this, initializeGlobalRGBShader(noteData, this));
 
-		if (appliedR != null && (rgbShader.r != appliedR || rgbShader.g != appliedG || rgbShader.b != appliedB))
+		if (!customRGBLocked && appliedR != null && (rgbShader.r != appliedR || rgbShader.g != appliedG || rgbShader.b != appliedB))
+			customRGBLocked = true; // a script changed the shader colors
+
+		if (customRGBLocked)
 		{
-			// Scripted/custom RGB - keep it and don't touch the splash colors.
-			rememberAppliedColors();
+			// Keep scripted/custom colors (and splash colors) intact.
 			if (r != null) rgbShader.r = r;
 			if (g != null) rgbShader.g = g;
 			if (b != null) rgbShader.b = b;
@@ -298,10 +341,11 @@ class Note extends FlxSprite
 
 		if (noteType == 'Hurt Note')
 		{
-			rgbShader.assign(RGBPalettePool.get(0xFF101010, 0xFFFF0000, 0xFF990022));
-			noteSplashData.r = 0xFFFF0000;
-			noteSplashData.g = 0xFF101010;
-			noteSplashData.texture = 'noteSplashes/noteSplashes-electric';
+			if (!customRGBLocked) {
+				rgbShader.assign(RGBPalettePool.get(0xFF101010, 0xFFFF0000, 0xFF990022));
+				rememberAppliedColors();
+			}
+			if (!customSplashLocked) setHurtSplashColors();
 		}
 		else
 		{
@@ -321,9 +365,7 @@ class Note extends FlxSprite
 					rgbShader.assign(RGBPalettePool.getGray());
 				default:
 			}
-			noteSplashData.r = -1;
-			noteSplashData.g = -1;
-			noteSplashData.b = -1;
+			resetSplashColors();
 		}
 
 		if (r != null) rgbShader.r = r;
@@ -334,30 +376,11 @@ class Note extends FlxSprite
 
 	private function set_noteType(value:String):String {
 		noteSplashData.texture = PlayState.SONG != null ? PlayState.SONG.splashSkin : 'noteSplashes/noteSplashes';
-		if(ClientPrefs.data.noteColorStyle == 'Normal' || !ClientPrefs.data.enableColorShader)
-			defaultRGB();
-		else
-			updateRGBColors();
 
 		if(noteData > -1 && noteType != value) {
 			switch(value) {
 				case 'Hurt Note':
 					ignoreNote = mustPress;
-					//reloadNote('HURTNOTE_assets');
-					//this used to change the note texture to HURTNOTE_assets.png,
-					//but i've changed it to something more optimized with the implementation of RGBPalette:
-
-					// note colors
-					rgbShader.r = 0xFF101010;
-					rgbShader.g = 0xFFFF0000;
-					rgbShader.b = 0xFF990022;
-
-					// splash data and colors
-					noteSplashData.r = 0xFFFF0000;
-					noteSplashData.g = 0xFF101010;
-					noteSplashData.texture = 'noteSplashes/noteSplashes-electric';
-
-					// gameplay data
 					lowPriority = true;
 					missHealth = isSustainNote ? 0.25 : 0.1;
 					hitCausesMiss = true;
@@ -371,9 +394,35 @@ class Note extends FlxSprite
 				case 'GF Sing':
 					gfNote = true;
 			}
-			if (value != null && value.length > 1) NoteTypesConfig.applyNoteTypeData(this, value);
+
+			// Note type .txt files may set custom rgbShader/splash colors.
+			// Detect that here so the color pass below doesn't overwrite them.
+			if (value != null && value.length > 1) {
+				var preR = rgbShader != null ? rgbShader.r : -1;
+				var preG = rgbShader != null ? rgbShader.g : -1;
+				var preB = rgbShader != null ? rgbShader.b : -1;
+				var preSR = noteSplashData.r, preSG = noteSplashData.g, preSB = noteSplashData.b;
+				NoteTypesConfig.applyNoteTypeData(this, value);
+				if (rgbShader != null && (rgbShader.r != preR || rgbShader.g != preG || rgbShader.b != preB))
+					customRGBLocked = true;
+				if (noteSplashData.r != preSR || noteSplashData.g != preSG || noteSplashData.b != preSB)
+					customSplashLocked = true;
+			}
 			if (hitsound != 'hitsound' && hitsoundVolume > 0) Paths.sound(hitsound); //precache new sound for being idiot-proof
 			noteType = value;
+		}
+
+		// Apply colors after noteType and note-type data are in place.
+		if (noteType == 'Hurt Note') {
+			if (!customRGBLocked && rgbShader != null) {
+				rgbShader.assign(RGBPalettePool.get(0xFF101010, 0xFFFF0000, 0xFF990022));
+				rememberAppliedColors();
+			}
+			if (!customSplashLocked) setHurtSplashColors();
+		} else if (ClientPrefs.data.noteColorStyle == 'Normal' || !ClientPrefs.data.enableColorShader) {
+			if (!customRGBLocked) defaultRGB();
+		} else {
+			updateRGBColors();
 		}
 		return value;
 	}
