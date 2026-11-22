@@ -185,6 +185,17 @@ class ClientPrefs {
 		for (key in Reflect.fields(data))
 			Reflect.setField(FlxG.save.data, key, Reflect.field(data, key));
 
+		// Keep the "Note Color" Mod Settings option in sync with the Visuals option.
+		#if MODS_ALLOWED
+		if(FlxG.save.data.modSettings != null)
+		{
+			var modSettings:Map<String, Dynamic> = FlxG.save.data.modSettings;
+			for (mod => settings in modSettings)
+				if(settings != null && settings.exists('noteColorStyle'))
+					settings.set('noteColorStyle', data.noteColorStyle);
+		}
+		#end
+
 		#if ACHIEVEMENTS_ALLOWED Achievements.save(); #end
 		FlxG.save.flush();
 

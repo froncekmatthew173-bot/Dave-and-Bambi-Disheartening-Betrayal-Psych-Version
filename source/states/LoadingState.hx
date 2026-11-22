@@ -752,6 +752,13 @@ class LoadingState extends MusicBeatState
 				}
 			}
 			#end
+
+			// FNF JS Engine per-character noteskin
+			if (!PlayState.isPixelStage)
+			{
+				var skinPath:String = Note.getCharNoteskinPath(character.noteskin);
+				if (skinPath != null) imagesToPrepare.push(skinPath);
+			}
 	
 			if (prefixVocals != null && character.vocals_file != null && character.vocals_file.length > 0)
 			{

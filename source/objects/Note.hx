@@ -202,17 +202,25 @@ class Note extends FlxSprite
 		}
 	}
 
+	// Resolves a character noteskin name to an image path, if it exists.
+	public static function getCharNoteskinPath(skin:String):String
+	{
+		if (skin == null || skin.length < 1) return null;
+		var path:String = 'noteskins/' + skin;
+		if (Paths.fileExists('images/$path.png', IMAGE)) return path;
+		path = 'noteSkins/' + skin;
+		if (Paths.fileExists('images/$path.png', IMAGE)) return path;
+		return null;
+	}
+
 	// Applies the noteskin defined on this note's character (JS Engine feature).
 	public function applyCharNoteskin(skin:String)
 	{
-		if (skin == null || skin.length < 1 || PlayState.isPixelStage) return;
+		var path:String = getCharNoteskinPath(skin);
+		if (path == null || PlayState.isPixelStage) return;
 		charNoteskin = skin;
-		var path:String = 'noteskins/' + skin;
-		if (Paths.fileExists('images/$path.png', IMAGE))
-		{
-			texture = path;
-			useRGBShader = false;
-		}
+		texture = path;
+		useRGBShader = false;
 	}
 
 	function charColors():Null<Array<Int>>

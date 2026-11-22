@@ -131,11 +131,13 @@ class MainMenuState extends MusicBeatState
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
+		var menuOffsetX:Float = logo.x + 20;
+		var menuOffsetY:Float = logo.y + logo.height + 20;
+		var menuSpacing:Float = 70;
+
 		for (i in 0...optionShit.length)
 		{
-			var item = createMenuItem(optionShit[i], 0, (i * 140) + 90);
-			item.y += (4 - optionShit.length) * 70;
-			item.screenCenter(X);
+			createMenuItem(optionShit[i], menuOffsetX, menuOffsetY + (i * menuSpacing));
 		}
 
 		if (leftOption != null)
