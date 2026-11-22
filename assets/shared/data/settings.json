@@ -1,0 +1,32 @@
+[
+	{
+		"save": "mechanics",
+		"name": "Mechanics",
+		"type": "bool",
+		"description": "Uncheck this option if you want to disable the Mechanics (Modcharts, Etc)",
+		"value": true
+	},
+	{
+		"save": "camMovement",
+		"name": "Camera Movement",
+		"type": "bool",
+		"description": "Uncheck this option if you want to disable the Camera Movement on note hit.",
+		"value": true
+	},
+	{
+		"save": "timetype",
+		"name": "Time Bar Type:",
+		"type": "string",
+		"description": "What type of timebar text do you want?",
+		"value": "Time Left",
+		"options": ["Time Left", "Time Elapsed", "Song Name", "Time Elapsed / Left", "Disabled"]	
+	},
+	{
+		"save": "noteColorStyle",
+		"name": "Note Color:",
+		"type": "string",
+		"description": "How notes and receptors are coloured. Based on FNF JS Engine.",
+		"value": "Char-Based",
+		"options": ["Normal", "Quant-Based", "Char-Based", "Grayscale", "Rainbow"]
+	}
+]
