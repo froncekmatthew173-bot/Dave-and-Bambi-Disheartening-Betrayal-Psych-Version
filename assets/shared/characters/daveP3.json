@@ -1,0 +1,55 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [449, 211],
+			"anim": "idle",
+			"fps": 16,
+			"name": "Idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [448, 211],
+			"anim": "singLEFT",
+			"fps": 15,
+			"name": "Left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [454, 213],
+			"anim": "singUP",
+			"fps": 15,
+			"name": "Up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [453, 213],
+			"anim": "singDOWN",
+			"fps": 15,
+			"name": "Down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [451, 211],
+			"anim": "singRIGHT",
+			"fps": 15,
+			"name": "Right",
+			"indices": []
+		}
+	],
+	"vocals_file": "",
+	"no_antialiasing": false,
+	"image": "characters/dave_phase_3",
+	"position": [0, 350],
+	"healthicon": "daveP3",
+	"flip_x": true,
+	"healthbar_colors": [167, 204, 236],
+	"camera_position": [550, -20],
+	"sing_duration": 4,
+	"scale": 0.8,
+	"_editor_isPlayer": true
+}
