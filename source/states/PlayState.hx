@@ -726,6 +726,22 @@ class PlayState extends MusicBeatState
 			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
 	}
 
+	/**
+	 * Recolors active and not-yet-spawned notes plus receptors after a
+	 * character swap. Char-Based colors read the new characters' health colors;
+	 * notes with scripted custom colors are left alone by Note.updateRGBColors().
+	 */
+	public function refreshNoteColors() {
+		if (!ClientPrefs.data.enableColorShader || ClientPrefs.data.noteColorStyle == 'Normal') return;
+
+		for (note in notes)
+			if(note != null && note.alive && note.useRGBShader) note.updateRGBColors();
+		for (note in unspawnNotes)
+			if(note != null && note.useRGBShader) note.updateRGBColors();
+		for (strum in playerStrums) strum.updateRGBColors();
+		for (strum in opponentStrums) strum.updateRGBColors();
+	}
+
 	public function addCharacterToList(newCharacter:String, type:Int) {
 		switch(type) {
 			case 0:
@@ -2299,14 +2315,7 @@ class PlayState extends MusicBeatState
 						}
 				}
 				reloadHealthBarColors();
-
-				// Recolor live notes when the character (and therefore its
-				// health colors / noteskin) changes.
-				if(ClientPrefs.data.noteColorStyle == 'Char-Based' && ClientPrefs.data.enableColorShader)
-				{
-					for (note in notes)
-						if(note != null && note.alive && note.useRGBShader) note.updateRGBColors();
-				}
+				refreshNoteColors();
 
 			case 'Change Scroll Speed':
 				if (songSpeedType != "constant")

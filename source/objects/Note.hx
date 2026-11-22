@@ -227,17 +227,48 @@ class Note extends FlxSprite
 	{
 		if (PlayState.instance == null || noteData < 0) return null;
 		var char = gfNote ? PlayState.instance.gf : (mustPress ? PlayState.instance.boyfriend : PlayState.instance.dad);
+		if (char == null) char = PlayState.instance.dad;
+		if (char == null) char = PlayState.instance.boyfriend;
 		return char != null ? char.healthColorArray : null;
+	}
+
+	// The last colors applied by updateRGBColors(). If a script changes the
+	// shader colors afterwards we detect it here and keep the custom colors,
+	// instead of overwriting them on the next recolor (e.g. a character swap).
+	var appliedR:Null<FlxColor> = null;
+	var appliedG:Null<FlxColor> = null;
+	var appliedB:Null<FlxColor> = null;
+
+	function rememberAppliedColors()
+	{
+		appliedR = rgbShader.r;
+		appliedG = rgbShader.g;
+		appliedB = rgbShader.b;
 	}
 
 	/**
 	 * Recolors this note according to the active ClientPrefs note color style.
 	 * Ported from FNF JS Engine (JordanSantiagoYT).
+	 *
+	 * Optional r/g/b arguments let scripts force their own colors on top of the
+	 * mode palette (same as JS Engine). Colors a script sets directly on the
+	 * shader are preserved across recolors.
 	 */
 	public function updateRGBColors(?r:FlxColor, ?g:FlxColor, ?b:FlxColor)
 	{
 		if (!useRGBShader) return;
 		if (rgbShader == null) rgbShader = new RGBShaderReference(this, initializeGlobalRGBShader(noteData, this));
+
+		if (appliedR != null && (rgbShader.r != appliedR || rgbShader.g != appliedG || rgbShader.b != appliedB))
+		{
+			// Scripted/custom RGB - keep it and don't touch the splash colors.
+			rememberAppliedColors();
+			if (r != null) rgbShader.r = r;
+			if (g != null) rgbShader.g = g;
+			if (b != null) rgbShader.b = b;
+			rememberAppliedColors();
+			return;
+		}
 
 		if (noteType == 'Hurt Note')
 		{
@@ -272,6 +303,7 @@ class Note extends FlxSprite
 		if (r != null) rgbShader.r = r;
 		if (g != null) rgbShader.g = g;
 		if (b != null) rgbShader.b = b;
+		rememberAppliedColors();
 	}
 
 	private function set_noteType(value:String):String {
