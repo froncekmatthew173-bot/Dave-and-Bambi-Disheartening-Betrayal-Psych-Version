@@ -241,9 +241,12 @@ class NoteSplash extends FlxSprite
 							var rgb = colors[i];
 							if (rgb == null)
 							{
-								if (i == 0) tempShader.r = arr[0];
-								else if (i == 1) tempShader.g = arr[1];
-								else if (i == 2) tempShader.b = arr[2];
+								// Fall back to the note's active color (mode or scripted),
+								// not just the default lane color.
+								var noteRef = note != null ? note.rgbShader : null;
+								if (i == 0) tempShader.r = noteRef != null ? noteRef.r : arr[0];
+								else if (i == 1) tempShader.g = noteRef != null ? noteRef.g : arr[1];
+								else if (i == 2) tempShader.b = noteRef != null ? noteRef.b : arr[2];
 								continue;
 							}
 
@@ -261,7 +264,10 @@ class NoteSplash extends FlxSprite
 							else if (i == 2) tempShader.b = color;
 						}
 					}
-					else tempShader.copyValues(Note.globalRgbShaders[noteData % Note.colArray.length]);
+					else if (note != null && note.rgbShader != null)
+						tempShader.copyValues(note.rgbShader.parent);
+					else
+						tempShader.copyValues(Note.globalRgbShaders[noteData % Note.colArray.length]);
 
 					if (note != null)
 					{
