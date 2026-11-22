@@ -1,0 +1,25 @@
+function onCreate()
+	makeLuaSprite('sprite1', 'phase5', -682, -811)
+	setScrollFactor('sprite1', 1, 1)
+	scaleObject('sprite1', 1.15, 1.4)
+	setProperty('sprite1.antialiasing', true)
+	setProperty('sprite1.alpha', 1)
+	setProperty('sprite1.angle', 0)
+	setProperty('sprite1.flipX', false)
+	setProperty('sprite1.flipY', false)
+	setProperty('sprite1.color', getColorFromHex('FFFFFF'))
+	addLuaSprite('sprite1', false)
+end
+
+function onCreatePost()
+	setProperty('defaultCamZoom', 0.6)
+	setProperty('cameraSpeed', 1.5)
+	
+	setProperty('boyfriend.x', 1170)
+	setProperty('boyfriend.y', 240)
+	setProperty('dad.x', -40)
+	setProperty('dad.y', 240)
+	setProperty('gf.x', 400)
+	setProperty('gf.y', 130)
+	setProperty('gf.visible', false)
+end
