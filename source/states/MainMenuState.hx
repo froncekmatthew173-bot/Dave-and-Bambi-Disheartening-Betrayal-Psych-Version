@@ -200,7 +200,7 @@ class MainMenuState extends MusicBeatState
 				switch (option)
 				{
 					case "play":
-						PlayState.SONG = Song.loadFromJson("inadequacy", "hard");
+						PlayState.SONG = Song.loadFromJson("inadequacy", "inadequacy");
 						MusicBeatState.switchState(new PlayState());
 					case "extras":
 						MusicBeatState.switchState(new FreeplayState());

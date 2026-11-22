@@ -158,8 +158,22 @@ class StrumNote extends FlxSprite
 
 	// FNF JS Engine: character noteskin support
 	public function updateNoteSkin(skin:String) {
+		if (PlayState.isPixelStage) return;
+
+		if (skin == null || skin.length < 1) {
+			// Restore the default skin when the new character has none.
+			var defaultSkin:String = Note.defaultNoteSkin + Note.getNoteSkinPostfix();
+			if (!Paths.fileExists('images/$defaultSkin.png', IMAGE)) defaultSkin = Note.defaultNoteSkin;
+			if (texture != defaultSkin) {
+				texture = defaultSkin;
+				useRGBShader = true;
+				rgbShader.enabled = false;
+			}
+			return;
+		}
+
 		var path:String = Note.getCharNoteskinPath(skin);
-		if (path == null || PlayState.isPixelStage || texture == path) return;
+		if (path == null || texture == path) return;
 		texture = path;
 		useRGBShader = false;
 		rgbShader.enabled = false;
