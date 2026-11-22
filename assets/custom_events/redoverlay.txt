@@ -1,0 +1,2 @@
+Value 1	Intensity (alpha)	0.3 = light red
+Value 2	Fade duration	1 = slow fade

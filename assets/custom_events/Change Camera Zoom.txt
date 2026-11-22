@@ -1,0 +1,4 @@
+Changes the camera zoom.
+
+Value 1: The Type. (Set, Add, Tween)
+Value 2: The Value(s)
