@@ -9,7 +9,7 @@ class StrumNote extends FlxSprite
 {
 	public var rgbShader:RGBShaderReference;
 	public var resetAnim:Float = 0;
-	private var noteData:Int = 0;
+	public var noteData:Int = 0;
 	public var direction:Float = 90;
 	public var downScroll:Bool = false;
 	public var sustainReduce:Bool = true;
@@ -31,19 +31,6 @@ class StrumNote extends FlxSprite
 		rgbShader = new RGBShaderReference(this, Note.initializeGlobalRGBShader(leData));
 		rgbShader.enabled = false;
 		if(PlayState.SONG != null && PlayState.SONG.disableNoteRGB) useRGBShader = false;
-		
-		var arr:Array<FlxColor> = ClientPrefs.data.arrowRGB[leData];
-		if(PlayState.isPixelStage) arr = ClientPrefs.data.arrowRGBPixel[leData];
-		
-		if(leData <= arr.length)
-		{
-			@:bypassAccessor
-			{
-				rgbShader.r = arr[0];
-				rgbShader.g = arr[1];
-				rgbShader.b = arr[2];
-			}
-		}
 
 		noteData = leData;
 		this.player = player;
@@ -167,5 +154,21 @@ class StrumNote extends FlxSprite
 			centerOrigin();
 		}
 		if(useRGBShader) rgbShader.enabled = (animation.curAnim != null && animation.curAnim.name != 'static');
+	}
+
+	// FNF JS Engine: character noteskin support
+	public function updateNoteSkin(skin:String) {
+		if (skin == null || skin.length < 1 || PlayState.isPixelStage) return;
+		var path:String = 'noteskins/' + skin;
+		if (Paths.fileExists('images/$path.png', IMAGE) && texture != path) {
+			texture = path;
+			useRGBShader = false;
+			rgbShader.enabled = false;
+		}
+	}
+
+	public function updateRGBColors() {
+		if (rgbShader != null && useRGBShader)
+			rgbShader.assign(Note.initializeGlobalRGBShader(noteData));
 	}
 }

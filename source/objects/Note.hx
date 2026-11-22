@@ -5,6 +5,7 @@ import backend.NoteTypesConfig;
 
 import shaders.RGBPalette;
 import shaders.RGBPalette.RGBShaderReference;
+import shaders.RGBPalette.RGBPalettePool;
 
 import objects.StrumNote;
 
@@ -86,6 +87,17 @@ class Note extends FlxSprite
 	public var rgbShader:RGBShaderReference;
 	public static var globalRgbShaders:Array<RGBPalette> = [];
 	public var inEditor:Bool = false;
+
+	public var useRGBShader(default, set):Bool = true;
+	private function set_useRGBShader(value:Bool):Bool
+	{
+		useRGBShader = value;
+		if (rgbShader != null) rgbShader.enabled = value;
+		return value;
+	}
+
+	// Per-character noteskin (from the character JSON "noteskin" field)
+	public var charNoteskin:String = '';
 
 	public var animSuffix:String = '';
 	public var gfNote:Bool = false;
@@ -190,9 +202,76 @@ class Note extends FlxSprite
 		}
 	}
 
+	// Applies the noteskin defined on this note's character (JS Engine feature).
+	public function applyCharNoteskin(skin:String)
+	{
+		if (skin == null || skin.length < 1 || PlayState.isPixelStage) return;
+		charNoteskin = skin;
+		var path:String = 'noteskins/' + skin;
+		if (Paths.fileExists('images/$path.png', IMAGE))
+		{
+			texture = path;
+			useRGBShader = false;
+		}
+	}
+
+	function charColors():Null<Array<Int>>
+	{
+		if (PlayState.instance == null || noteData < 0) return null;
+		var char = gfNote ? PlayState.instance.gf : (mustPress ? PlayState.instance.boyfriend : PlayState.instance.dad);
+		return char != null ? char.healthColorArray : null;
+	}
+
+	/**
+	 * Recolors this note according to the active ClientPrefs note color style.
+	 * Ported from FNF JS Engine (JordanSantiagoYT).
+	 */
+	public function updateRGBColors(?r:FlxColor, ?g:FlxColor, ?b:FlxColor)
+	{
+		if (!useRGBShader) return;
+		if (rgbShader == null) rgbShader = new RGBShaderReference(this, initializeGlobalRGBShader(noteData, this));
+
+		if (noteType == 'Hurt Note')
+		{
+			rgbShader.assign(RGBPalettePool.get(0xFF101010, 0xFFFF0000, 0xFF990022));
+			noteSplashData.r = 0xFFFF0000;
+			noteSplashData.g = 0xFF101010;
+			noteSplashData.texture = 'noteSplashes/noteSplashes-electric';
+		}
+		else
+		{
+			switch (ClientPrefs.data.noteColorStyle)
+			{
+				case 'Rainbow':
+					var rainbowTime:Float = (ClientPrefs.data.rainbowTime != 0 ? ClientPrefs.data.rainbowTime * 1000 : Conductor.crochet);
+					rgbShader.assign(RGBPalettePool.getRainbow((strumTime / rainbowTime * 360) % 360));
+				case 'Quant-Based':
+					var songTime:Float = isSustainNote && parent != null ? parent.strumTime : strumTime;
+					backend.CoolUtil.checkNoteQuant(this, songTime, rgbShader);
+				case 'Char-Based':
+					var colors = charColors();
+					if (colors != null) rgbShader.assign(RGBPalettePool.getChar(colors));
+					else defaultRGB();
+				case 'Grayscale':
+					rgbShader.assign(RGBPalettePool.getGray());
+				default:
+			}
+			noteSplashData.r = -1;
+			noteSplashData.g = -1;
+			noteSplashData.b = -1;
+		}
+
+		if (r != null) rgbShader.r = r;
+		if (g != null) rgbShader.g = g;
+		if (b != null) rgbShader.b = b;
+	}
+
 	private function set_noteType(value:String):String {
 		noteSplashData.texture = PlayState.SONG != null ? PlayState.SONG.splashSkin : 'noteSplashes/noteSplashes';
-		defaultRGB();
+		if(ClientPrefs.data.noteColorStyle == 'Normal' || !ClientPrefs.data.enableColorShader)
+			defaultRGB();
+		else
+			updateRGBColors();
 
 		if(noteData > -1 && noteType != value) {
 			switch(value) {
@@ -326,29 +405,51 @@ class Note extends FlxSprite
 		x += offsetX;
 	}
 
-	public static function initializeGlobalRGBShader(noteData:Int)
+	public static function initializeGlobalRGBShader(noteData:Int, ?note:Note)
 	{
 		if(globalRgbShaders[noteData] == null)
 		{
-			var newRGB:RGBPalette = new RGBPalette();
-			var arr:Array<FlxColor> = (!PlayState.isPixelStage) ? ClientPrefs.data.arrowRGB[noteData] : ClientPrefs.data.arrowRGBPixel[noteData];
-			
-			if (arr != null && noteData > -1 && noteData <= arr.length)
+			var newRGB:RGBPalette;
+			final style = ClientPrefs.data.noteColorStyle;
+
+			if (note != null)
 			{
-				newRGB.r = arr[0];
-				newRGB.g = arr[1];
-				newRGB.b = arr[2];
+				// These modes recolor every note individually, so start from a
+				// neutral palette until updateRGBColors() assigns the right one.
+				switch (style)
+				{
+					case 'Grayscale', 'Rainbow', 'Char-Based':
+						newRGB = RGBPalettePool.getGray();
+					default:
+						newRGB = getLanePalette(noteData, PlayState.isPixelStage, style == 'Quant-Based');
+				}
 			}
 			else
-			{
-				newRGB.r = 0xFFFF0000;
-				newRGB.g = 0xFF00FF00;
-				newRGB.b = 0xFF0000FF;
-			}
-			
+				newRGB = getLanePalette(noteData, PlayState.isPixelStage, style == 'Quant-Based');
+
 			globalRgbShaders[noteData] = newRGB;
 		}
 		return globalRgbShaders[noteData];
+	}
+
+	static function getLanePalette(noteData:Int, pixel:Bool, quant:Bool):RGBPalette
+	{
+		var newRGB:RGBPalette = new RGBPalette();
+		var arr:Array<FlxColor> = quant ? ClientPrefs.data.quantRGB[noteData] : (pixel ? ClientPrefs.data.arrowRGBPixel[noteData] : ClientPrefs.data.arrowRGB[noteData]);
+
+		if (arr != null && noteData > -1 && noteData <= arr.length)
+		{
+			newRGB.r = arr[0];
+			newRGB.g = arr[1];
+			newRGB.b = arr[2];
+		}
+		else
+		{
+			newRGB.r = 0xFFFF0000;
+			newRGB.g = 0xFF00FF00;
+			newRGB.b = 0xFF0000FF;
+		}
+		return newRGB;
 	}
 
 	var _lastNoteOffX:Float = 0;

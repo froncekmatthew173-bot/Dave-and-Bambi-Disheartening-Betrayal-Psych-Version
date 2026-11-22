@@ -36,6 +36,33 @@ import states.TitleState;
 		[0xFF71E300, 0xFFF6FFE6, 0xFF003100],
 		[0xFFFF884E, 0xFFFFFAF5, 0xFF6C0000]];
 
+	// Note color modes from FNF JS Engine (JordanSantiagoYT)
+	public var noteColorStyle:String = 'Char-Based';
+	public var enableColorShader:Bool = true;
+	public var rainbowTime:Float = 5;
+	public var quantRGB:Array<Array<FlxColor>> = [
+		[0xFFF9393F, 0xFFFFFFFF, 0xFF651038], // 4th
+		[0xFF3A48F5, 0xFFFFFFFF, 0xFF0C3D60], // 8th
+		[0xFFB200FF, 0xFFFFFFFF, 0xFF57007F], // 12th
+		[0xFFFFD800, 0xFFFFFFFF, 0xFF4D4100], // 16th
+		[0xFFFF00DC, 0xFFFFFFFF, 0xFF740066], // 24th
+		[0xFFFF6A00, 0xFFFFFFFF, 0xFF652800], // 32nd
+		[0xFF00FFFF, 0xFFFFFFFF, 0xFF004B5E], // 48th
+		[0xFF12FA05, 0xFFFFFFFF, 0xFF0A4447], // 64th
+		[0xFFFF7F7F, 0xFFFFFFFF, 0xFF592C2C], // 96th
+		[0xFFD67FFF, 0xFFFFFFFF, 0xFF5F3870], // 128th
+		[0xFF00FF90, 0xFFFFFFFF, 0xFF003921], // 192nd
+		[0xFF7F3300, 0xFFFFFFFF, 0xFF401800], // 256th
+		[0xFF007F0E, 0xFFFFFFFF, 0xFF003404], // 384th
+		[0xFF230093, 0xFFFFFFFF, 0xFF0F0043], // 512th
+		[0xFFE7E7E7, 0xFFFFFFFF, 0xFF2A2A2A], // 768th
+		[0xFF00AB64, 0xFFFFFFFF, 0xFF00321E], // 1024th
+		[0xFF000000, 0xFFFFFFFF, 0xFF000000], // 1536th
+		[0xFFA69C52, 0xFFFFFFFF, 0xFF2F2D17], // 2048th
+		[0xFFFFF9AB, 0xFFFFFFFF, 0xFF45442F], // 3072nd
+		[0xFFFF6A00, 0xFFFFFFFF, 0xFF652800]  // 6144th
+	];
+
 	public var ghostTapping:Bool = true;
 	public var timeBarType:String = 'Time Left';
 	public var scoreZoom:Bool = true;
@@ -176,6 +203,20 @@ class ClientPrefs {
 		for (key in Reflect.fields(data))
 			if (key != 'gameplaySettings' && Reflect.hasField(FlxG.save.data, key))
 				Reflect.setField(data, key, Reflect.field(FlxG.save.data, key));
+
+		// The note color style can also be changed from a mod's "Mod Settings"
+		// menu (settings.json -> noteColorStyle). Keep the engine in sync with it.
+		#if MODS_ALLOWED
+		if(FlxG.save.data.modSettings != null)
+		{
+			var modSettings:Map<String, Dynamic> = FlxG.save.data.modSettings;
+			for (mod => settings in modSettings)
+				if(settings != null && settings.exists('noteColorStyle')) {
+					var savedStyle:Dynamic = settings.get('noteColorStyle');
+					if(savedStyle is String) data.noteColorStyle = savedStyle;
+				}
+		}
+		#end
 		
 		if(Main.fpsVar != null)
 			Main.fpsVar.visible = data.showFPS;

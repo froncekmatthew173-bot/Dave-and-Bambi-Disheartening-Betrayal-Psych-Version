@@ -51,6 +51,33 @@ class VisualsSettingsSubState extends BaseOptionsMenu
 			noteOptionID = optionsArray.length - 1;
 		}
 		
+		// Note color modes ported from FNF JS Engine
+		var option:Option = new Option('Note Color Style:',
+			'How notes and receptors get their colors (JS Engine feature).',
+			'noteColorStyle',
+			STRING,
+			['Normal', 'Quant-Based', 'Char-Based', 'Grayscale', 'Rainbow']);
+		addOption(option);
+		option.onChange = onChangeNoteColorStyle;
+
+		var option:Option = new Option('Enable Note Colors',
+			'If unchecked, notes will use your default colors from the Note Colors menu.',
+			'enableColorShader',
+			BOOL);
+		addOption(option);
+		option.onChange = onChangeNoteColorStyle;
+
+		var option:Option = new Option('Rainbow Speed',
+			'How fast the rainbow note color cycles, in seconds.',
+			'rainbowTime',
+			FLOAT);
+		option.minValue = 0.5;
+		option.maxValue = 20;
+		option.changeValue = 0.5;
+		option.decimals = 1;
+		addOption(option);
+		option.onChange = onChangeNoteColorStyle;
+
 		var noteSplashes:Array<String> = Mods.mergeAllTextsNamed('images/noteSplashes/list.txt');
 		if(noteSplashes.length > 0)
 		{
@@ -226,6 +253,13 @@ class VisualsSettingsSubState extends BaseOptionsMenu
 		note.texture = skin; //Load texture and anims
 		note.reloadNote();
 		note.playAnim('static');
+	}
+
+	function onChangeNoteColorStyle()
+	{
+		shaders.RGBPalette.RGBPalettePool.clear();
+		Note.globalRgbShaders = [];
+		for (note in notes) note.updateRGBColors();
 	}
 
 	function onChangeSplashSkin()

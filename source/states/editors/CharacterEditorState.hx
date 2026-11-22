@@ -414,7 +414,8 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 				healthbar_colors: [161, 161, 161],
 				camera_position: [0, 0],
 				position: [0, 0],
-				vocals_file: null
+				vocals_file: null,
+				noteskin: null
 			};
 
 			character.loadCharacterFile(_template);
@@ -598,6 +599,7 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 	var imageInputText:PsychUIInputText;
 	var healthIconInputText:PsychUIInputText;
 	var vocalsInputText:PsychUIInputText;
+	var noteskinInputText:PsychUIInputText;
 
 	var singDurationStepper:PsychUINumericStepper;
 	var scaleStepper:PsychUINumericStepper;
@@ -676,6 +678,10 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 		healthColorStepperG = new PsychUINumericStepper(singDurationStepper.x + 65, saveCharacterButton.y, 20, character.healthColorArray[1], 0, 255, 0);
 		healthColorStepperB = new PsychUINumericStepper(singDurationStepper.x + 130, saveCharacterButton.y, 20, character.healthColorArray[2], 0, 255, 0);
 
+		tab_group.add(new FlxText(15, healthColorStepperB.y + 20, 100, 'Noteskin:'));
+		noteskinInputText = new PsychUIInputText(15, healthColorStepperB.y + 40, 200, character.noteskin != null ? character.noteskin : '', 8);
+		tab_group.add(noteskinInputText);
+
 		tab_group.add(new FlxText(15, imageInputText.y - 18, 100, 'Image file name:'));
 		tab_group.add(new FlxText(15, healthIconInputText.y - 18, 100, 'Health icon name:'));
 		tab_group.add(new FlxText(15, vocalsInputText.y - 18, 100, 'Vocals File Postfix:'));
@@ -725,6 +731,11 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 			else if(sender == imageInputText)
 			{
 				character.imageFile = imageInputText.text;
+				unsavedProgress = true;
+			}
+			else if(sender == noteskinInputText)
+			{
+				character.noteskin = noteskinInputText.text;
 				unsavedProgress = true;
 			}
 		}
@@ -841,6 +852,7 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 		imageInputText.text = character.imageFile;
 		healthIconInputText.text = character.healthIcon;
 		vocalsInputText.text = character.vocalsFile != null ? character.vocalsFile : '';
+		noteskinInputText.text = character.noteskin != null ? character.noteskin : '';
 		singDurationStepper.value = character.singDuration;
 		scaleStepper.value = character.jsonScale;
 		flipXCheckBox.checked = character.originalFlipX;
@@ -1297,6 +1309,7 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 			"no_antialiasing": character.noAntialiasing,
 			"healthbar_colors": character.healthColorArray,
 			"vocals_file": character.vocalsFile,
+			"noteskin": character.noteskin,
 			"_editor_isPlayer": character.isPlayer
 		};
 

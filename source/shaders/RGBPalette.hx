@@ -86,6 +86,21 @@ class RGBShaderReference
 		}
 	}
 	
+	public function assign(palette:RGBPalette)
+	{
+		parent = palette;
+		_original = palette;
+		allowNew = true;
+		_owner.shader = enabled ? palette.shader : null;
+		@:bypassAccessor
+		{
+			r = palette.r;
+			g = palette.g;
+			b = palette.b;
+			mult = palette.mult;
+		}
+	}
+
 	private function set_r(value:FlxColor)
 	{
 		if(allowNew && value != _original.r) cloneOriginal();
@@ -168,5 +183,105 @@ class RGBPaletteShader extends FlxShader {
 	public function new()
 	{
 		super();
+	}
+}
+
+/**
+ * Shared RGB palettes used by the JS Engine note-color modes.
+ * Palettes are cached so notes using the same color share one shader.
+ */
+class RGBPalettePool
+{
+	static final cache:Map<String, RGBPalette> = new Map();
+	static final normal:Array<RGBPalette> = [];
+	static final normalPixel:Array<RGBPalette> = [];
+	static final quant:Array<RGBPalette> = [];
+	static final rainbow:Array<RGBPalette> = [];
+	static final char:Map<Int, RGBPalette> = new Map();
+	static inline final rainbowSteps:Int = 32;
+
+	static var gray:RGBPalette;
+
+	public static function get(r:FlxColor, g:FlxColor, b:FlxColor):RGBPalette
+	{
+		final key = '$r,$g,$b';
+		var palette = cache.get(key);
+		if (palette == null)
+			cache.set(key, palette = build(r, g, b));
+		return palette;
+	}
+
+	public static function getDefault(noteData:Int, pixel:Bool):RGBPalette
+	{
+		if (noteData < 0) return null;
+		final table = pixel ? normalPixel : normal;
+		var palette = table[noteData];
+		if (palette == null)
+		{
+			final colors = pixel ? backend.ClientPrefs.data.arrowRGBPixel[noteData] : backend.ClientPrefs.data.arrowRGB[noteData];
+			if (colors == null) return null;
+			table[noteData] = palette = build(colors[0], colors[1], colors[2]);
+		}
+		return palette;
+	}
+
+	public static function getQuant(index:Int):RGBPalette
+	{
+		var palette = quant[index];
+		if (palette == null)
+		{
+			final c = backend.ClientPrefs.data.quantRGB[index];
+			if (c == null) return null;
+			quant[index] = palette = build(c[0], c[1], c[2]);
+		}
+		return palette;
+	}
+
+	public static function getRainbow(hue:Float):RGBPalette
+	{
+		final index = (Math.floor(hue / 360 * rainbowSteps) % rainbowSteps + rainbowSteps) % rainbowSteps;
+		var palette = rainbow[index];
+		if (palette == null)
+		{
+			final main = FlxColor.fromHSB(index * 360 / rainbowSteps, 1, 1);
+			rainbow[index] = palette = build(main, FlxColor.WHITE, main.getDarkened(0.7));
+		}
+		return palette;
+	}
+
+	public static function getGray():RGBPalette
+	{
+		if (gray == null) gray = build(0xFFA0A0A0, FlxColor.WHITE, 0xFF424242);
+		return gray;
+	}
+
+	public static function getChar(health:Array<Int>):RGBPalette
+	{
+		if (health == null || health.length < 3) return getGray();
+		final main = FlxColor.fromRGB(health[0], health[1], health[2]);
+		var palette = char.get(main);
+		if (palette == null)
+			char.set(main, palette = build(main, FlxColor.WHITE, main.getDarkened(0.7)));
+		return palette;
+	}
+
+	public static function clear()
+	{
+		cache.clear();
+		char.clear();
+		quant.resize(0);
+		rainbow.resize(0);
+		normal.resize(0);
+		normalPixel.resize(0);
+		gray = null;
+	}
+
+	static function build(r:FlxColor, g:FlxColor, b:FlxColor):RGBPalette
+	{
+		final palette = new RGBPalette();
+		palette.r = r;
+		palette.g = g;
+		palette.b = b;
+		return palette;
 	}
 }

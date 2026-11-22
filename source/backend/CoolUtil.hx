@@ -38,6 +38,49 @@ class CoolUtil
 		return (m / snap);
 	}
 
+	// Quant-Based note colors, ported from FNF JS Engine.
+	public static final noteColorBeats:Array<Int> = [
+		4, 8, 12, 16, 24, 32, 48, 64, 96, 128, 192, 256, 384, 512, 768, 1024, 1536, 2048, 3072, 6144
+	];
+	static final quantSteps:Array<Int> = [for (b in noteColorBeats) Std.int(6144 / b)];
+
+	public static function checkNoteQuant(note:objects.Note, timeToCheck:Float, ?rgbShader:shaders.RGBPalette.RGBShaderReference)
+	{
+		if (ClientPrefs.data.noteColorStyle != 'Quant-Based' || !ClientPrefs.data.enableColorShader) return;
+
+		var bpm:Float = Conductor.bpm;
+		final map = Conductor.bpmChangeMap;
+		var i = map.length - 1;
+		while (i >= 0)
+		{
+			final change = map[i];
+			if (timeToCheck >= change.songTime)
+			{
+				bpm = change.bpm;
+				timeToCheck -= change.songTime;
+				break;
+			}
+			i--;
+		}
+
+		final beat = Math.round(timeToCheck / ((60 / bpm) * 1000) * 1536);
+		var found = quantSteps.length - 1;
+		for (q in 0...quantSteps.length)
+		{
+			if (beat % quantSteps[q] == 0)
+			{
+				found = q;
+				break;
+			}
+		}
+
+		if (rgbShader != null)
+		{
+			final palette = shaders.RGBPalette.RGBPalettePool.getQuant(found);
+			if (palette != null) rgbShader.assign(palette);
+		}
+	}
+
 	inline public static function capitalize(text:String)
 		return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
 

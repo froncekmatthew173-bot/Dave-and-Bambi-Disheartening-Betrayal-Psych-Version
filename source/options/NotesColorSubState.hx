@@ -628,6 +628,7 @@ class NotesColorSubState extends MusicBeatSubstate
 			modeNotes.add(newNote);
 		}
 
+		shaders.RGBPalette.RGBPalettePool.clear();
 		Note.globalRgbShaders = [];
 		for (i in 0...dataArray.length)
 		{
@@ -710,6 +711,7 @@ class NotesColorSubState extends MusicBeatSubstate
 
 	override function destroy()
 	{
+		shaders.RGBPalette.RGBPalettePool.clear();
 		Note.globalRgbShaders = [];
 		super.destroy();
 	}

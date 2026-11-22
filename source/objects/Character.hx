@@ -26,6 +26,7 @@ typedef CharacterFile = {
 	var no_antialiasing:Bool;
 	var healthbar_colors:Array<Int>;
 	var vocals_file:String;
+	@:optional var noteskin:String; // FNF JS Engine: per-character noteskin
 	@:optional var _editor_isPlayer:Null<Bool>;
 }
 
@@ -64,6 +65,7 @@ class Character extends FlxSprite
 
 	public var healthIcon:String = 'face';
 	public var animationsArray:Array<AnimArray> = [];
+	public var noteskin:String = '';
 
 	public var positionArray:Array<Float> = [0, 0];
 	public var cameraPosition:Array<Float> = [0, 0];
@@ -176,6 +178,7 @@ class Character extends FlxSprite
 		#end
 
 		imageFile = json.image;
+		noteskin = json.noteskin != null ? json.noteskin : '';
 		jsonScale = json.scale;
 		if(json.scale != 1) {
 			scale.set(jsonScale, jsonScale);
