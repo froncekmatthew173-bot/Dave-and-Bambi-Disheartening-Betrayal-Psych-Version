@@ -259,7 +259,11 @@ class VisualsSettingsSubState extends BaseOptionsMenu
 	{
 		shaders.RGBPalette.RGBPalettePool.clear();
 		Note.globalRgbShaders = [];
-		for (note in notes) note.updateRGBColors();
+		for (note in notes) {
+			note.useRGBShader = ClientPrefs.data.enableColorShader;
+			changeNoteSkin(note);
+			note.updateRGBColors();
+		}
 	}
 
 	function onChangeSplashSkin()

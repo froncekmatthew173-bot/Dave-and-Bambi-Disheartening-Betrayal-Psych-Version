@@ -44,7 +44,7 @@ class CoolUtil
 	];
 	static final quantSteps:Array<Int> = [for (b in noteColorBeats) Std.int(6144 / b)];
 
-	public static function checkNoteQuant(note:objects.Note, timeToCheck:Float, ?rgbShader:shaders.RGBPalette.RGBShaderReference)
+	public static function checkNoteQuant(?note:objects.Note, timeToCheck:Float, ?rgbShader:shaders.RGBPalette.RGBShaderReference)
 	{
 		if (ClientPrefs.data.noteColorStyle != 'Quant-Based' || !ClientPrefs.data.enableColorShader) return;
 

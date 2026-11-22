@@ -4,6 +4,7 @@ import backend.animation.PsychAnimationController;
 
 import shaders.RGBPalette;
 import shaders.RGBPalette.RGBShaderReference;
+import shaders.RGBPalette.RGBPalettePool;
 
 class StrumNote extends FlxSprite
 {
@@ -143,6 +144,14 @@ class StrumNote extends FlxSprite
 				resetAnim = 0;
 			}
 		}
+
+		// Rainbow and Quant-Based colors change over time.
+		if(useRGBShader && modeColorsActive() && Std.isOfType(FlxG.state, PlayState))
+		{
+			var style:String = ClientPrefs.data.noteColorStyle;
+			if(style == 'Rainbow' || style == 'Quant-Based') updateRGBColors();
+		}
+
 		super.update(elapsed);
 	}
 
@@ -153,7 +162,14 @@ class StrumNote extends FlxSprite
 			centerOffsets();
 			centerOrigin();
 		}
-		if(useRGBShader) rgbShader.enabled = (animation.curAnim != null && animation.curAnim.name != 'static');
+		if(useRGBShader)
+			rgbShader.enabled = (animation.curAnim != null && animation.curAnim.name != 'static') || modeColorsActive();
+	}
+
+	// Whether the strum should show the active JS Engine color mode even while idle.
+	function modeColorsActive():Bool
+	{
+		return ClientPrefs.data.enableColorShader && ClientPrefs.data.noteColorStyle != 'Normal' && !PlayState.isPixelStage;
 	}
 
 	// FNF JS Engine: character noteskin support
@@ -169,6 +185,7 @@ class StrumNote extends FlxSprite
 				useRGBShader = true;
 				rgbShader.enabled = false;
 			}
+			updateRGBColors();
 			return;
 		}
 
@@ -179,8 +196,33 @@ class StrumNote extends FlxSprite
 		rgbShader.enabled = false;
 	}
 
+	// Applies the active note-color mode to this receptor, the same way notes
+	// are colored in FNF JS Engine (JordanSantiagoYT).
 	public function updateRGBColors() {
-		if (rgbShader != null && useRGBShader)
-			rgbShader.assign(Note.initializeGlobalRGBShader(noteData));
+		if (rgbShader == null || !useRGBShader) return;
+
+		var palette:RGBPalette = null;
+		if (modeColorsActive())
+		{
+			switch (ClientPrefs.data.noteColorStyle)
+			{
+				case 'Char-Based':
+					var char:Character = (player == 1) ? PlayState.instance.boyfriend : PlayState.instance.dad;
+					if (char != null && char.healthColorArray != null)
+						palette = RGBPalettePool.getChar(char.healthColorArray);
+				case 'Grayscale':
+					palette = RGBPalettePool.getGray();
+				case 'Rainbow':
+					var rainbowTime:Float = (ClientPrefs.data.rainbowTime != 0 ? ClientPrefs.data.rainbowTime * 1000 : Conductor.crochet);
+					palette = RGBPalettePool.getRainbow((Conductor.songPosition / rainbowTime * 360) % 360);
+				case 'Quant-Based':
+					backend.CoolUtil.checkNoteQuant(null, Conductor.songPosition, rgbShader);
+					return;
+				default:
+			}
+		}
+
+		if (palette == null) palette = Note.initializeGlobalRGBShader(noteData);
+		rgbShader.assign(palette);
 	}
 }

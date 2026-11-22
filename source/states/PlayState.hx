@@ -1562,6 +1562,7 @@ class PlayState extends MusicBeatState
 
 			var charSkin:String = (player == 1) ? bfNoteskin : dadNoteskin;
 			if (charSkin != null && charSkin.length > 0) babyArrow.updateNoteSkin(charSkin);
+			babyArrow.updateRGBColors();
 
 			if (!isStoryMode && !skipArrowStartTween)
 			{
@@ -2246,7 +2247,10 @@ class PlayState extends MusicBeatState
 							boyfriend.alpha = lastAlpha;
 							iconP1.changeIcon(boyfriend.healthIcon);
 							bfNoteskin = boyfriend.noteskin;
-							for (strum in playerStrums) strum.updateNoteSkin(bfNoteskin);
+							for (strum in playerStrums) {
+								strum.updateNoteSkin(bfNoteskin);
+								strum.updateRGBColors();
+							}
 						}
 						setOnScripts('boyfriendName', boyfriend.curCharacter);
 
@@ -2270,7 +2274,10 @@ class PlayState extends MusicBeatState
 							dad.alpha = lastAlpha;
 							iconP2.changeIcon(dad.healthIcon);
 							dadNoteskin = dad.noteskin;
-							for (strum in opponentStrums) strum.updateNoteSkin(dadNoteskin);
+							for (strum in opponentStrums) {
+								strum.updateNoteSkin(dadNoteskin);
+								strum.updateRGBColors();
+							}
 						}
 						setOnScripts('dadName', dad.curCharacter);
 
