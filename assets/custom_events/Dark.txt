@@ -1,5 +1,0 @@
-Darken Event for dialogue.
-
-Value 1: Should the Hud tween as well? (True, False),
-	 The tween value for the overlay sprite.
-Value 2: Tween Value, Time it Takes.

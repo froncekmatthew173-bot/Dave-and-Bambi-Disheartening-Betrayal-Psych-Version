@@ -1,55 +1,78 @@
 {
+	"healthbar_colors": [
+		167,
+		203,
+		236
+	],
+	"position": [
+		-300,
+		100
+	],
+	"no_antialiasing": false,
+	"scale": 0.9,
+	"camera_position": [
+		-100,
+		0
+	],
+	"image": "characters/davep3",
+	"sing_duration": 6.1,
+	"healthicon": "davep3",
+	"flip_x": true,
 	"animations": [
 		{
-			"loop": false,
-			"offsets": [449, 211],
+			"loop": true,
+			"offsets": [
+				0,
+				0.999
+			],
+			"fps": 12,
 			"anim": "idle",
-			"fps": 16,
-			"name": "Idle",
-			"indices": []
+			"indices": [],
+			"name": "Idle"
 		},
 		{
 			"loop": false,
-			"offsets": [448, 211],
-			"anim": "singLEFT",
-			"fps": 15,
-			"name": "Left",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [454, 213],
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
 			"anim": "singUP",
-			"fps": 15,
-			"name": "Up",
-			"indices": []
+			"indices": [],
+			"name": "Up"
 		},
 		{
 			"loop": false,
-			"offsets": [453, 213],
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
 			"anim": "singDOWN",
-			"fps": 15,
-			"name": "Down",
-			"indices": []
+			"indices": [],
+			"name": "Down"
 		},
 		{
 			"loop": false,
-			"offsets": [451, 211],
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "Left"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
 			"anim": "singRIGHT",
-			"fps": 15,
-			"name": "Right",
-			"indices": []
+			"indices": [],
+			"name": "Right"
 		}
-	],
-	"vocals_file": "",
-	"no_antialiasing": false,
-	"image": "characters/dave_phase_3",
-	"position": [0, 350],
-	"healthicon": "daveP3",
-	"flip_x": true,
-	"healthbar_colors": [167, 204, 236],
-	"camera_position": [550, -20],
-	"sing_duration": 4,
-	"scale": 0.8,
-	"_editor_isPlayer": true
+	]
 }

@@ -1,55 +1,78 @@
 {
+	"healthbar_colors": [
+		14,
+		95,
+		255
+	],
+	"position": [
+		100,
+		200
+	],
+	"no_antialiasing": false,
+	"scale": 1,
+	"camera_position": [
+		-100,
+		0
+	],
+	"image": "characters/davep2",
+	"sing_duration": 6.1,
+	"healthicon": "davep2",
+	"flip_x": true,
 	"animations": [
 		{
-			"offsets": [-20, 121],
-			"indices": [],
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
 			"fps": 24,
 			"anim": "idle",
-			"loop": false,
+			"indices": [],
 			"name": "idle"
 		},
 		{
-			"offsets": [-10, 105],
-			"indices": [],
-			"fps": 24,
-			"anim": "singDOWN",
 			"loop": false,
-			"name": "down"
-		},
-		{
-			"offsets": [15, 124],
-			"indices": [],
+			"offsets": [
+				-43,
+				4
+			],
 			"fps": 24,
 			"anim": "singLEFT",
-			"loop": false,
+			"indices": [],
 			"name": "left"
 		},
 		{
-			"offsets": [71, 131],
-			"indices": [],
-			"fps": 24,
-			"anim": "singRIGHT",
 			"loop": false,
-			"name": "right"
+			"offsets": [
+				-15,
+				-20
+			],
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "down"
 		},
 		{
-			"offsets": [-22, 148],
-			"indices": [],
+			"loop": false,
+			"offsets": [
+				0,
+				35
+			],
 			"fps": 24,
 			"anim": "singUP",
-			"loop": false,
+			"indices": [],
 			"name": "up"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-115,
+				11
+			],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "right"
 		}
-	],
-	"vocals_file": "",
-	"no_antialiasing": false,
-	"image": "characters/dave phase 2",
-	"position": [0, 350],
-	"healthicon": "daveP2",
-	"flip_x": true,
-	"healthbar_colors": [12, 67, 255],
-	"camera_position": [0, 0],
-	"sing_duration": 4,
-	"scale": 0.8,
-	"_editor_isPlayer": true
+	]
 }

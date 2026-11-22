@@ -1,0 +1,4 @@
+Calls a named Lua function in the song's other loaded Lua scripts.
+
+Value 1: Function name to call (example: multiplyPulse)
+Value 2: Optional comma-separated arguments (example: hello,123)

@@ -1,2 +1,0 @@
-Value1: Message|Duration in milliseconds
-Value2: Title|Icon Type (INFO, WARNING, ERROR)
