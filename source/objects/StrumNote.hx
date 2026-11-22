@@ -162,11 +162,13 @@ class StrumNote extends FlxSprite
 			centerOffsets();
 			centerOrigin();
 		}
+		// Keep the mode color on the shader, but only show it while the strum
+		// is pressed/confirmed. Idle strums keep their normal skin colors.
 		if(useRGBShader)
-			rgbShader.enabled = (animation.curAnim != null && animation.curAnim.name != 'static') || modeColorsActive();
+			rgbShader.enabled = (animation.curAnim != null && animation.curAnim.name != 'static');
 	}
 
-	// Whether the strum should show the active JS Engine color mode even while idle.
+	// Whether the active JS Engine color mode needs updating over time.
 	function modeColorsActive():Bool
 	{
 		return ClientPrefs.data.enableColorShader && ClientPrefs.data.noteColorStyle != 'Normal' && !PlayState.isPixelStage;
