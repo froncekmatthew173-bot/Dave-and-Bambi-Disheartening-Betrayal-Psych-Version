@@ -1,4 +1,0 @@
-The funny Dave and Bambi subtitles.
-Value 1: What should be said.
-Value 2: Size, Speed, Duration.
-(If left blank, will be 36, 0.02, 1)

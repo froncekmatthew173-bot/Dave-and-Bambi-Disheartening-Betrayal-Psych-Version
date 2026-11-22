@@ -1,3 +1,0 @@
-Value 1: Camera Type
-
-Value 2: How long it lasts
