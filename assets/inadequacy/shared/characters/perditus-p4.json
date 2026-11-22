@@ -1,0 +1,93 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"anim": "idle",
+			"fps": 12,
+			"name": "p3perditus idle0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"anim": "singUP",
+			"fps": 12,
+			"name": "p3perditus up0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"anim": "singUP-alt",
+			"fps": 12,
+			"name": "p3perditus upALT",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"anim": "singLEFT",
+			"fps": 12,
+			"name": "p3perditus left0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"anim": "singLEFT-alt",
+			"fps": 12,
+			"name": "p3perditus leftALT",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"anim": "singDOWN",
+			"fps": 12,
+			"name": "p3perditus down0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"anim": "singDOWN-alt",
+			"fps": 12,
+			"name": "p3perditus downALT",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"anim": "singRIGHT",
+			"fps": 12,
+			"name": "p3perditus right0",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"anim": "singRIGHT-alt",
+			"fps": 12,
+			"name": "p3perditus rightALT",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"anim": "break",
+			"fps": 12,
+			"name": "p3perditus micbreak",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"anim": "idle-alt",
+			"fps": 12,
+			"name": "p3perditus micbreak",
+			"indices": [11]
+		}
+	],
+	"vocals_file": "",
+	"no_antialiasing": true,
+	"image": "characters/perditusp3",
+	"position": [-400, 140],
+	"healthicon": "icon-bamb-sexy",
+	"flip_x": false,
+	"healthbar_colors": [105, 0, 7],
+	"camera_position": [130, 160],
+	"sing_duration": 6.1,
+	"noteskin": "lol",
+	"scale": 0.8,
+	"_editor_isPlayer": false
+}

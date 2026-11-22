@@ -1,0 +1,22 @@
+Change Stage Event (Psych Engine 0.7.3)
+
+Changes the current stage during the song.
+
+Value 1:
+Stage name you want to load.
+Example: mall, school, spooky, stage
+
+Value 2:
+Reload characters? (true/false)
+
+true  = Reloads BF, Dad, and GF after stage change.
+false = Only changes the stage background.
+
+Notes:
+- The stage must exist in:
+  assets/preload/stages/
+  or
+  mods/stages/
+
+- Stage name must match the .lua file name exactly.
+- Some complex stages may cause a small lag spike.

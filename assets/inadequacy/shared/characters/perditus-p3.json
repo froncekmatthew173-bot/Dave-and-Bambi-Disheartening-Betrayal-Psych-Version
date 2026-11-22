@@ -1,0 +1,56 @@
+{
+	"animations": [
+		{
+			"offsets": [467, 0],
+			"loop": false,
+			"fps": 17,
+			"anim": "idle",
+			"indices": [],
+			"name": "perditusp2new idle"
+		},
+		{
+			"offsets": [551, 70],
+			"loop": false,
+			"fps": 17,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "perditusp2new down"
+		},
+		{
+			"offsets": [456, -26],
+			"loop": false,
+			"fps": 17,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "perditusp2new right"
+		},
+		{
+			"offsets": [349, -46],
+			"loop": false,
+			"fps": 17,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "perditusp2new left"
+		},
+		{
+			"offsets": [496, -41],
+			"loop": false,
+			"fps": 17,
+			"anim": "singUP",
+			"indices": [],
+			"name": "perditusp2new up"
+		}
+	],
+	"vocals_file": "",
+	"no_antialiasing": true,
+	"image": "characters/perditusp2",
+	"position": [0, 0],
+	"healthicon": "perdius-3d",
+	"flip_x": false,
+	"healthbar_colors": [15, 8, 25],
+	"camera_position": [-800, 0],
+	"sing_duration": 4,
+	"noteskin": "lol",
+	"scale": 1.5,
+	"_editor_isPlayer": false
+}

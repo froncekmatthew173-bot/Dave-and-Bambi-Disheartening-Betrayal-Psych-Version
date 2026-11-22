@@ -140,7 +140,9 @@ class RGBShaderReference
 			parent.g = _original.g;
 			parent.b = _original.b;
 			parent.mult = _original.mult;
-			_owner.shader = parent.shader;
+			// Cloning a palette for a custom color must not re-enable a shader
+			// that was intentionally disabled (noteskins, disableNoteRGB, ...).
+			_owner.shader = enabled ? parent.shader : null;
 			//trace('created new shader');
 		}
 	}

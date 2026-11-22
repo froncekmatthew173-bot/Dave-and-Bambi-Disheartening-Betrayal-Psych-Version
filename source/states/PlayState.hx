@@ -727,19 +727,34 @@ class PlayState extends MusicBeatState
 	}
 
 	/**
-	 * Recolors active and not-yet-spawned notes plus receptors after a
-	 * character swap. Char-Based colors read the new characters' health colors;
-	 * notes with scripted custom colors are left alone by Note.updateRGBColors().
+	 * Reapplies character noteskins and colors after a Character swap. Notes
+	 * are generated once at song start, so without this they would keep the
+	 * skin/color of the character that was active when they were created.
+	 * Notes with scripted custom colors are left alone by updateRGBColors().
 	 */
-	public function refreshNoteColors() {
-		if (!ClientPrefs.data.enableColorShader || ClientPrefs.data.noteColorStyle == 'Normal') return;
-
+	public function refreshNoteVisuals() {
 		for (note in notes)
-			if(note != null && note.alive && note.useRGBShader) note.updateRGBColors();
+			if(note != null && note.alive) refreshSingleNoteVisual(note);
 		for (note in unspawnNotes)
-			if(note != null && note.useRGBShader) note.updateRGBColors();
-		for (strum in playerStrums) strum.updateRGBColors();
-		for (strum in opponentStrums) strum.updateRGBColors();
+			if(note != null) refreshSingleNoteVisual(note);
+
+		for (strum in playerStrums) {
+			strum.updateNoteSkin(bfNoteskin);
+			strum.updateRGBColors();
+		}
+		for (strum in opponentStrums) {
+			strum.updateNoteSkin(dadNoteskin);
+			strum.updateRGBColors();
+		}
+	}
+
+	function refreshSingleNoteVisual(note:Note) {
+		var skin:String = note.gfNote ? null : (note.mustPress ? bfNoteskin : dadNoteskin);
+		if (skin != null && skin.length > 0) note.applyCharNoteskin(skin);
+		else note.resetCharNoteskin();
+
+		if (note.useRGBShader && ClientPrefs.data.enableColorShader && ClientPrefs.data.noteColorStyle != 'Normal')
+			note.updateRGBColors();
 	}
 
 	public function addCharacterToList(newCharacter:String, type:Int) {
@@ -2315,7 +2330,7 @@ class PlayState extends MusicBeatState
 						}
 				}
 				reloadHealthBarColors();
-				refreshNoteColors();
+				refreshNoteVisuals();
 
 			case 'Change Scroll Speed':
 				if (songSpeedType != "constant")

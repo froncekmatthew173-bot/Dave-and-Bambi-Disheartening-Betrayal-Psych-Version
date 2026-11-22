@@ -185,10 +185,13 @@ class Note extends FlxSprite
 
 	public function defaultRGB()
 	{
-		var arr:Array<FlxColor> = ClientPrefs.data.arrowRGB[noteData];
-		if(PlayState.isPixelStage) arr = ClientPrefs.data.arrowRGBPixel[noteData];
+		if (rgbShader == null) return;
+		var idx:Int = noteData % colArray.length;
+		if (idx < 0) idx = 0;
+		var arr:Array<FlxColor> = ClientPrefs.data.arrowRGB[idx];
+		if(PlayState.isPixelStage) arr = ClientPrefs.data.arrowRGBPixel[idx];
 
-		if (arr != null && noteData > -1 && noteData <= arr.length)
+		if (arr != null && arr.length >= 3)
 		{
 			rgbShader.r = arr[0];
 			rgbShader.g = arr[1];
@@ -200,16 +203,28 @@ class Note extends FlxSprite
 			rgbShader.g = 0xFF00FF00;
 			rgbShader.b = 0xFF0000FF;
 		}
+		// Keep the "last applied" state in sync so switching note color modes
+		// later is not mistaken for a script overriding the shader.
+		rememberAppliedColors();
 	}
 
 	// Resolves a character noteskin name to an image path, if it exists.
+	// JS Engine keeps skins in images/noteskins/, but mods also use images/
+	// directly or images/myNotes/, so check all of those locations.
 	public static function getCharNoteskinPath(skin:String):String
 	{
 		if (skin == null || skin.length < 1) return null;
-		var path:String = 'noteskins/' + skin;
-		if (Paths.fileExists('images/$path.png', IMAGE)) return path;
-		path = 'noteSkins/' + skin;
-		if (Paths.fileExists('images/$path.png', IMAGE)) return path;
+		skin = skin.trim().replace('\\', '/');
+
+		var candidates:Array<String> = [skin];
+		if (!skin.contains('/')) {
+			candidates.push('noteskins/' + skin);
+			candidates.push('noteSkins/' + skin);
+			candidates.push('myNotes/' + skin);
+		}
+
+		for (path in candidates)
+			if (Paths.fileExists('images/$path.png', IMAGE)) return path;
 		return null;
 	}
 
@@ -221,6 +236,17 @@ class Note extends FlxSprite
 		charNoteskin = skin;
 		texture = path;
 		useRGBShader = false;
+	}
+
+	// Restores the normal skin when the new character has no noteskin.
+	public function resetCharNoteskin()
+	{
+		if (charNoteskin == null || charNoteskin.length < 1) return;
+		charNoteskin = '';
+		texture = ''; // reloadNote() resolves the song/default skin from here
+		useRGBShader = ClientPrefs.data.enableColorShader && (PlayState.SONG == null || !PlayState.SONG.disableNoteRGB);
+		rgbShader.enabled = useRGBShader;
+		updateRGBColors();
 	}
 
 	function charColors():Null<Array<Int>>
@@ -475,9 +501,11 @@ class Note extends FlxSprite
 	static function getLanePalette(noteData:Int, pixel:Bool, quant:Bool):RGBPalette
 	{
 		var newRGB:RGBPalette = new RGBPalette();
-		var arr:Array<FlxColor> = quant ? ClientPrefs.data.quantRGB[noteData] : (pixel ? ClientPrefs.data.arrowRGBPixel[noteData] : ClientPrefs.data.arrowRGB[noteData]);
+		var idx:Int = noteData % colArray.length;
+		if (idx < 0) idx = 0;
+		var arr:Array<FlxColor> = quant ? ClientPrefs.data.quantRGB[idx] : (pixel ? ClientPrefs.data.arrowRGBPixel[idx] : ClientPrefs.data.arrowRGB[idx]);
 
-		if (arr != null && noteData > -1 && noteData <= arr.length)
+		if (arr != null && arr.length >= 3)
 		{
 			newRGB.r = arr[0];
 			newRGB.g = arr[1];
@@ -507,7 +535,10 @@ class Note extends FlxSprite
 			if(skin == null || skin.length < 1)
 				skin = defaultNoteSkin + postfix;
 		}
-		else rgbShader.enabled = false;
+		// Scripts (noteskinchange events, custom note types, etc.) can change
+		// a note's texture. Keep the RGB shader active for those notes so the
+		// active note colors still apply. Character noteskins opt out through
+		// useRGBShader = false in applyCharNoteskin().
 
 		var animName:String = null;
 		if(animation.curAnim != null) {
